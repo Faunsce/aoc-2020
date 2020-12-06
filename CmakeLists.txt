@@ -1,0 +1,4 @@
+project(aoc2020)
+
+add_executable(${PROJECT_NAME} "src/Main.cpp")
+file(COPY ${PROJECT_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
