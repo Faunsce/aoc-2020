@@ -4,48 +4,42 @@
 #include <vector>
 
 Day2::Day2()
-	: Day("assets/Day2.txt") {
+	: Day{"assets/Day2.txt"}
+	, validPasswords{ 0 } {
+	while (!this->file.eof()) {
+		std::string line; 
+		std::getline(file, line, '\n'); // grab a line from the file
+		line += "\n"; // add a cutoff character
+		std::vector<std::string> section; // create a way to split up the data
+		for (const auto& letter : line) { 
+			static std::string tempString = "";
+			if (letter != '-' && letter != ' ' && letter != '\n') {
+				tempString += letter;
+			}
+			else {
+				section.emplace_back(tempString);
+				tempString = "";
+			}
+		}
+		sections.emplace_back(section);
+	}
 	this->Solution1();
 }
 
 void Day2::Solution1() {
-	struct Password
-	{
-		int min = 0;
-		int max = 0;
-		char letter;
-	};
-	std::vector<Password> passwords;
-	int validPasswords = 0;
-	while (!this->file.eof()) {
-		std::string line;
-		std::getline(file, line, '\n');
-		line += "\n";
-		Password tempPassword;
-		std::vector<std::string> sections;
-		for (const auto& letter : line) {
-			static std::string tempString = "";
-			if (letter != '-' && letter != ' ' && letter != '\n') {
-				tempString += letter;
-			} else {
-				sections.emplace_back(tempString);
-				tempString = "";
-			}
-		}
-		tempPassword.min = std::stoi(sections[0]);
-		tempPassword.max = std::stoi(sections[1]);
-		tempPassword.letter = sections[2].c_str()[0];
+	for (const auto& section : sections) {
 		int counter = 0;
-		for (const auto& letter : sections[3]) {
-			if (letter == tempPassword.letter) {
+		for (const auto& letter : section[3]) {
+			if (letter == section[2].c_str()[0]) {
 				counter++;
 			}
 		}
-		if (counter <= tempPassword.max && counter >= tempPassword.min) {
+		if (counter >= std::stoi(section[0]) && counter <= std::stoi(section[1])) {
 			validPasswords++;
 		}
 	}
 	std::cout << "valid passwords [" << validPasswords << "]" << std::endl;
+	validPasswords = 0;
 }
 
 void Day2::Solution2() {
