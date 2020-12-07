@@ -24,6 +24,7 @@ Day2::Day2()
 		sections.emplace_back(section);
 	}
 	this->Solution1();
+	this->Solution2();
 }
 
 void Day2::Solution1() {
@@ -43,5 +44,12 @@ void Day2::Solution1() {
 }
 
 void Day2::Solution2() {
-
+	for (const auto& section : sections) {
+		if ( (section[3][std::stoi(section[0])-1] == section[2].c_str()[0]) ? 
+			!(section[3][std::stoi(section[1])-1] == section[2].c_str()[0]) : 
+			(section[3][std::stoi(section[1])-1] == section[2].c_str()[0]) ) {
+			validPasswords++;
+		}
+	}
+	std::cout << "valid passwords [" << validPasswords << "]" << std::endl;
 }
