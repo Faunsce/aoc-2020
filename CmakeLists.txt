@@ -10,7 +10,10 @@ set (WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/assets)
 file(COPY ${PROJECT_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 # .exe, Append all src files to an env. var.
-FILE(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
+FILE(GLOB sources 
+	${PROJECT_SOURCE_DIR}/src/*.cpp
+	${PROJECT_SOURCE_DIR}/src/Days/*.cpp
+)
 
 add_executable(${PROJECT_NAME} ${sources}) # Create executable
 set_target_properties(${PROJECT_NAME} PROPERTIES 
