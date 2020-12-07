@@ -1,4 +1,19 @@
-project(aoc2020)
+# Version Setup
+cmake_minimum_required(VERSION 3.1...3.14.3)
 
-add_executable(${PROJECT_NAME} "src/Main.cpp")
+project(aoc2020)
+set (CMAKE_CXX_STANDARD 17)
+set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
+set (WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/assets)
+
+# Progam Resource Management
 file(COPY ${PROJECT_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
+
+# .exe, Append all src files to an env. var.
+FILE(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
+
+add_executable(${PROJECT_NAME} ${sources}) # Create executable
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+	CXX_STANDARD_REQUIRED ON
+	CXX_EXTENSIONS OFF
+)
